@@ -14,6 +14,7 @@
 		976AA9AC1A90151F005F8989 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 976AA9AB1A90151F005F8989 /* Images.xcassets */; };
 		976AA9AF1A90151F005F8989 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 976AA9AD1A90151F005F8989 /* LaunchScreen.xib */; };
 		976AA9BB1A901520005F8989 /* debugpuckTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 976AA9BA1A901520005F8989 /* debugpuckTests.m */; };
+		976AA9C61A90154D005F8989 /* FREDebugPuck.m in Sources */ = {isa = PBXBuildFile; fileRef = 976AA9C51A90154D005F8989 /* FREDebugPuck.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +41,8 @@
 		976AA9B41A901520005F8989 /* debugpuckTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = debugpuckTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		976AA9B91A901520005F8989 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		976AA9BA1A901520005F8989 /* debugpuckTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = debugpuckTests.m; sourceTree = "<group>"; };
+		976AA9C41A90154D005F8989 /* FREDebugPuck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FREDebugPuck.h; sourceTree = "<group>"; };
+		976AA9C51A90154D005F8989 /* FREDebugPuck.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FREDebugPuck.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +89,8 @@
 				976AA9A51A90151F005F8989 /* ViewController.h */,
 				976AA9A61A90151F005F8989 /* ViewController.m */,
 				976AA9A81A90151F005F8989 /* Main.storyboard */,
+				976AA9C41A90154D005F8989 /* FREDebugPuck.h */,
+				976AA9C51A90154D005F8989 /* FREDebugPuck.m */,
 				976AA9AB1A90151F005F8989 /* Images.xcassets */,
 				976AA9AD1A90151F005F8989 /* LaunchScreen.xib */,
 				976AA99E1A90151F005F8989 /* Supporting Files */,
@@ -219,6 +224,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				976AA9C61A90154D005F8989 /* FREDebugPuck.m in Sources */,
 				976AA9A71A90151F005F8989 /* ViewController.m in Sources */,
 				976AA9A41A90151F005F8989 /* AppDelegate.m in Sources */,
 				976AA9A11A90151F005F8989 /* main.m in Sources */,

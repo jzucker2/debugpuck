@@ -7,8 +7,11 @@
 //
 
 #import "ViewController.h"
+#import "FREDebugPuck.h"
 
 @interface ViewController ()
+
+@property (nonatomic, strong) FREDebugPuck *debugPuck;
 
 @end
 
@@ -17,6 +20,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    self.debugPuck = [[FREDebugPuck alloc] initWithFrame:CGRectMake(50, 50, 50, 50)];
+    [self.view addSubview:self.debugPuck];
 }
 
 - (void)didReceiveMemoryWarning {
