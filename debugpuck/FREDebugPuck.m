@@ -6,7 +6,13 @@
 //  Copyright (c) 2015 Jordan Zucker. All rights reserved.
 //
 
+@import MessageUI;
+
 #import "FREDebugPuck.h"
+
+@interface FREDebugPuck ()
+
+@end
 
 @implementation FREDebugPuck
 
@@ -27,6 +33,13 @@
     heyLabel.text = @"hey\ngirl";
     [self addSubview:heyLabel];
     self.backgroundColor = [UIColor redColor];
+    UIPanGestureRecognizer *panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanGestureRecognizer:)];
+    [self addGestureRecognizer:panGestureRecognizer];
+    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGestureRecognizer:)];
+    [self addGestureRecognizer:tapGestureRecognizer];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleKeyboardWillAppear:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleKeyboardWillChangeFrame:) name:UIKeyboardWillChangeFrameNotification object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleKeyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
 }
 
 - (instancetype)init
@@ -47,6 +60,32 @@
     return self;
 }
 
+- (void)handleTapGestureRecognizer:(UITapGestureRecognizer *)tapGestureRecognizer
+{
+    NSLog(@"handle tap");
+    MFMailComposeViewController *composeViewController = [[MFMailComposeViewController alloc] init];
+}
+
+- (void)handlePanGestureRecognizer:(UIPanGestureRecognizer *)panGestureRecognizer
+{
+//    NSLog(@"handle");
+    CGPoint translate = [panGestureRecognizer translationInView:self.superview];
+//    NSLog(@"translate: %@", NSStringFromCGPoint(translate));
+    __weak typeof(self) wself = self;
+    [UIView animateWithDuration:0.1
+                          delay:0.0
+                        options:(UIViewAnimationOptionAllowUserInteraction|UIViewAnimationOptionBeginFromCurrentState)
+                     animations:^{
+                         __strong typeof (wself) sself = wself;
+                         if (!sself) {
+                             return;
+                         }
+                         sself.center = CGPointMake(sself.center.x + translate.x, sself.center.y + translate.y);
+                         [panGestureRecognizer setTranslation:CGPointMake(0.0f, 0.0f) inView:sself.superview];
+                     }
+                     completion:nil];
+}
+
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -56,43 +95,70 @@
     return self;
 }
 
-- (BOOL)beginTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
-{
-    NSLog(@"beginTracking");
-    
-    return YES;
-}
+//- (BOOL)beginTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
+//{
+//    NSLog(@"beginTracking");
+//    
+//    return YES;
+//}
+//
+//- (BOOL)continueTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
+//{
+//    NSLog(@"continueTracking");
+//    __weak typeof(self) wself = self;
+//    [UIView animateWithDuration:0.1
+//                          delay:0.0
+//         usingSpringWithDamping:0.4
+//          initialSpringVelocity:0.6
+//                        options:(UIViewAnimationOptionAllowUserInteraction|
+//                                 UIViewAnimationOptionBeginFromCurrentState)
+//                     animations:^{
+//                         __strong typeof(wself) sself = wself;
+//                         if (!sself) {
+//                             return;
+//                         }
+//                         CGPoint currentPoint = [touch locationInView:sself.superview];
+//                         CGPoint previousPoint = [touch previousLocationInView:sself.superview];
+//                         NSLog(@"currentPosition: %@", NSStringFromCGPoint(currentPoint));
+//                         NSLog(@"previousPosition: %@", NSStringFromCGPoint(previousPoint));
+//                         sself.transform = CGAffineTransformMakeTranslation((currentPoint.x-previousPoint.x), (currentPoint.y - previousPoint.y));
+//                         
+//                     }
+//                     completion:nil];
+//    return YES;
+//}
+//
+//- (void)endTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
+//{
+//    NSLog(@"endTracking");
+//}
+//
+//- (void)cancelTrackingWithEvent:(UIEvent *)event
+//{
+//    NSLog(@"cancelTracking");
+//}
 
-- (BOOL)continueTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
-{
-    NSLog(@"continueTracking");
-    __weak typeof(self) wself = self;
-    [UIView animateWithDuration:0.1
-                          delay:0.0
-         usingSpringWithDamping:0.4
-          initialSpringVelocity:0.6
-                        options:(UIViewAnimationOptionAllowUserInteraction|
-                                 UIViewAnimationOptionBeginFromCurrentState)
-                     animations:^{
-                         __strong typeof(wself) sself = wself;
-                         if (!sself) {
-                             return;
-                         }
-                         NSLog(@"currentPosition: %@", NSStringFromCGPoint([touch locationInView:sself.superview]));
-                         NSLog(@"previousPosition: %@", NSStringFromCGPoint([touch previousLocationInView:sself.superview]));
-                     }
-                     completion:nil];
-    return YES;
-}
+#pragma mark - Keyboard Handling
 
-- (void)endTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
-{
-    NSLog(@"endTracking");
-}
+//- (void)handleKeyboardWillAppear:(NSNotification *)notification
+//{
+//    NSLog(@"keyboardappear: %@", notification.userInfo);
+//}
+//
+//- (void)handleKeyboardWillHide:(NSNotification *)notification
+//{
+//    NSLog(@"keyboardWillHide: %@", notification.userInfo);
+//}
 
-- (void)cancelTrackingWithEvent:(UIEvent *)event
+- (void)handleKeyboardWillChangeFrame:(NSNotification *)notification
 {
-    NSLog(@"cancelTracking");
+    NSLog(@"keyboardWillChangeFrame: %@", notification.userInfo);
+    NSDictionary *userInfo = notification.userInfo;
+    CGRect keyboardEndFrame = [userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    if (CGRectContainsRect(keyboardEndFrame, self.frame)) {
+        NSLog(@"move it!");
+        self.center = CGPointApplyAffineTransform(self.center, CGAffineTransformMakeTranslation(0, -keyboardEndFrame.size.height));
+    }
 }
 
 @end
